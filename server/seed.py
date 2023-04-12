@@ -20,7 +20,8 @@ with app.app_context():
     r2 = Research(topic = "Robotics, A Case Study", year = 2010, page_count = 100)
     r3 = Research(topic = "Methods of Training Data", year = 2020, page_count = 1000)
     research_papers = [r1, r2, r3]
-
+    db.session.add_all(research_papers)
+    db.session.commit()
     print("Creating Author...")
 
 
@@ -28,16 +29,18 @@ with app.app_context():
     a2 = Author(name = "Ted", field_of_study = "Robotics")
     a3 = Author(name = "Bob", field_of_study = "Cybersecurity")
     authors = [a1, a2, a3]
+    db.session.add_all(authors)
+    db.session.commit()
 
     print("Creating ResearchAuthors...")
 
-    ra1 = ResearchAuthors(author_id = a1, research_id = r1)
-    ra2 = ResearchAuthors(author_id = a2, research_id  = r2)
-    ra3 = ResearchAuthors(author_id = a3, research_id = r3)
-    ra4 = ResearchAuthors(author_id = a1, research_id = r3)
+    ra1 = ResearchAuthors(author_id = a1.id, research_id = r1.id)
+    ra2 = ResearchAuthors(author_id = a2.id, research_id  = r2.id)
+    ra3 = ResearchAuthors(author_id = a3.id, research_id = r3.id)
+    ra4 = ResearchAuthors(author_id = a1.id, research_id = r3.id)
     researchAuthor = [ra1, ra2, ra3, ra4]
-    db.session.add_all(research_papers)
-    db.session.add_all(authors)
+    
+    
     db.session.add_all(researchAuthor)
     db.session.commit()
 
